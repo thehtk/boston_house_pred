@@ -1,1 +1,22 @@
 # boston_house_pred
+
+import pandas as pd
+import numpy as np
+df =pd.read_csv("boston.csv")
+df.head()
+df.isnull().sum()
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.boxplot(y=df["zn"]);
+plt.show()
+X=df[['nox','rm','dis','ptratio','lstat']]
+y=df['medv']
+from sklearn.model_selection import train_test_split
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=0)
+from sklearn.linear_model import LinearRegression
+regressor=LinearRegression()
+regressor.fit(X_train,y_train)
+y_pred=regressor.predict(X_test)
+plt.plot(X_test['nox'],y_pred)
+plt.scatter(X_test['nox'],y_test)
+plt.show()
